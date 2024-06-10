@@ -33,7 +33,7 @@ app.listen(port, () => {
     console.log(`Server listening on port ${port}`);
 });
 
-const client = new Client({
+let client = new Client({
     puppeteer: {
         args: [
             '--no-sandbox',
@@ -42,7 +42,7 @@ const client = new Client({
             '--disable-accelerated-2d-canvas',
             '--no-first-run',
             '--no-zygote',
-            '--single-process', 
+            '--single-process',
             '--disable-gpu'
         ]
     },
@@ -84,11 +84,23 @@ app.get('/shutdown', async (req, res) => {
         await client.destroy();
         console.log('Client has been shut down');
         client = new Client({
+            puppeteer: {
+                args: [
+                    '--no-sandbox',
+                    '--disable-setuid-sandbox',
+                    '--disable-dev-shm-usage',
+                    '--disable-accelerated-2d-canvas',
+                    '--no-first-run',
+                    '--no-zygote',
+                    '--single-process',
+                    '--disable-gpu'
+                ]
+            },
             webVersionCache: {
                 type: "remote",
                 remotePath:
                     "https://raw.githubusercontent.com/wppconnect-team/wa-version/main/html/2.2412.54.html",
-            },
+            }
         });
         initializeClient();
         console.log('Client has been restarted');
