@@ -44,8 +44,7 @@ const client = new Client({
             '--no-zygote',
             '--single-process', 
             '--disable-gpu'
-        ],
-        executablePath: process.env.CHROME_BIN || null
+        ]
     },
     webVersionCache: {
         type: "remote",
